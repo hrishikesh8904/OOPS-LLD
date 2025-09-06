@@ -60,8 +60,10 @@ class checkOut{
         void setPaymentGateway(PaymentGateway *p){
             this->p = p;
         }
-        void proceedToCheckOut(){
-            p->initiatePayment();
+        void proceedToCheckOut(double amount){
+            if(p != nullptr){
+                p->initiatePayment(amount);
+            }
         }
 };
 
@@ -69,5 +71,17 @@ int main(){
     double amount;
     cout<<"Enter amount to pay: "<<endl;
     cin>>amount;
-    cout<<k
+    cout<<"Choose Payment Gateway: (1/2)"<<endl;
+    int n;
+    cin>>n;
+    checkOut service;
+    if(n == 1){
+        stripePayment pt;
+        service.setPaymentGateway(&pt);
+    }
+    else{
+        paytmPayment pt;
+        service.setPaymentGateway(&pt);
+    }
+    service.proceedToCheckOut(amount);
 }
